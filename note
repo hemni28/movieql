@@ -1,0 +1,60 @@
+Over-fetching : 요청한 정보보다 더 많은 정보를 서버가 받는 것 > 비효율적 & 개발자가 뭘 받았는지 모르게됨
+Under-fetching : 어떤 하나를 완성하기 위해, 다른 여러 요청들을 할 때 발생 > 즉, REST에서 하나를 완성하기 위해 많은 소스를 요청하는 것
+
+GraphQL을 통해 해결할 수 있는 2가지
+1. Over-fetching 없이 코드를 짤 수 있고, 개발자가 어떤 정보를 원하는지에 대해 통제할 수 있음
+2. Under-fetching 없음
+
+HOW ?
+- GraphQL에는 URL 체계도 없고, 따라서 URL은 당연히 존재하지 않음
+- 단지 하나의 종점만 있을 뿐!
+ex )
+- graphQL Language 요청
+query {
+    feed {
+        comments
+        likeNumber
+    }
+    notifications {
+        isRead
+    }
+    user {
+        username
+        profilePic
+    }
+}
+- javascript 응답
+{
+    feed: [
+        {
+            comments:1,
+            likeNumber: 20
+        }
+    ],
+    notifications: [
+        {
+            isRead: true
+        }
+    ],
+    user: {
+        username: "hailey"
+        profilePic: "https://"
+    }
+}
+
+** 라이브러리
+nodemon
+: file change 발생하면 서버 재시작해줌
+babel-node, babel-cli
+: 코드를 더 좋게 작성하게 해줌
+
+
+schema.graphql
+> 사용자가 뭘 할지에 대해 정의 ( just describe )
+>> 그 중 하나는 데이터베이스로 부터 정보를 얻는 것 = Query
+Query
+: 단지 정보를 받을 때만 쓰임
+Mutation(변형)
+: 정보를 변형할때 서버 혹은 DB 혹은 메모리에서 정보를 바꾸는 역할을 할 때 사용
+Resolvers
+: Query의 기능성을 프로그래밍 (즉, Query를 어떤 방식으로 resolve할지 코드 작성) > DB랑 연결해도 되고, 메모리랑 연결해도 되고, 맘대로~
